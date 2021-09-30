@@ -20,119 +20,156 @@ import org.springframework.web.servlet.ModelAndView;
 public class QuizController {
 
 	@GetMapping("/resultado")
-	public String getMethodName(Model modelo, HttpSession session ) {
-		
+	public String getMethodName(Model modelo, HttpSession session) {
+
 		@SuppressWarnings("unchecked")
 		List<Integer> puntajes = (List<Integer>) session.getAttribute("puntos");
-		if(puntajes == null) {
+		if (puntajes == null) {
 			puntajes = new ArrayList<>();
 		}
-		
+		// holasaaaaaaa
 		int puntos = 0;
-		
-		for (Integer punto : puntajes) 
-			puntos +=punto;
-		
+
+		for (Integer punto : puntajes)
+			puntos += punto;
+
 		modelo.addAttribute("puntaje", puntos);
-		
+
 		return "resultados";
 	}
 
-	
 	@RequestMapping(value = "/inicio", method = RequestMethod.GET)
 	public ModelAndView paginaInicio(Model modelo) {
-		ModelAndView amav =new ModelAndView();
+		ModelAndView amav = new ModelAndView();
 		amav.setViewName("index");
 		return amav;
 	}
-	
-	@PostMapping("/preguntar")
-	public String  preguntar( Model modelo ) {
-		//TODO: process POST request
-		
-		return "redirect:/pregunta1";
-	}
 
 	@GetMapping("/p1")
-	public String getPag1(Model modelo) {
+	public String getPag1(Model modelo, HttpServletRequest request) {
+		request.getSession().invalidate();
 		return "pregunta1";
 	}
-	
+
 	@PostMapping("/p1")
-	public String  postPag1(@RequestParam String respuesta, HttpServletRequest request) {
-		//TODO: process POST request
-		
+	public String postPag1(@RequestParam String respuesta, HttpServletRequest request) {
+		// TODO: process POST request
+
 		@SuppressWarnings("unchecked")
 		List<Integer> puntajes = (List<Integer>) request.getSession().getAttribute("puntos");
-		if(puntajes == null) {
+		if (puntajes == null) {
 			puntajes = new ArrayList<>();
 			request.getSession().setAttribute("puntos", puntajes);
 		}
-		
+
 		puntajes.add(Integer.parseInt(respuesta));
 		request.getSession().setAttribute("puntos", puntajes);
-		
-		return "redirect:/pregunta2";
+
+		return "redirect:/p2";
 	}
-	
-	@GetMapping("/pregunta2")
+
+	@GetMapping("/p2")
 	public String getPag2() {
 		return "pregunta2";
 	}
-	
-	@PostMapping("/pregunta2")
-	public String  postPag2(@RequestParam String respuesta, HttpServletRequest request) {
-		//TODO: process POST request
-		
+
+	@PostMapping("/p2")
+	public String postPag2(@RequestParam String respuesta, HttpServletRequest request) {
+		// TODO: process POST request
+
 		@SuppressWarnings("unchecked")
 		List<Integer> puntajes = (List<Integer>) request.getSession().getAttribute("puntos");
-		if(puntajes == null) {
+		if (puntajes == null) {
 			puntajes = new ArrayList<>();
 			request.getSession().setAttribute("puntos", puntajes);
 		}
-		
+
 		puntajes.add(Integer.parseInt(respuesta));
 		request.getSession().setAttribute("puntos", puntajes);
-		
+
+		// return "redirect:/resultado";
 		return "redirect:/pregunta3";
 	}
-	
-	@GetMapping("/pregunta3")
+
+	@GetMapping("/p3")
 	public String getPag3() {
 		return "pregunta3";
 	}
-	
-	@PostMapping("/pregunta3")
-	public String  postPag3(@RequestParam String respuesta, HttpServletRequest request) {
-		//TODO: process POST request
-		
+
+	@PostMapping("/p3")
+	public String postPag3(@RequestParam String respuesta, HttpServletRequest request) {
+		// TODO: process POST request
+
 		@SuppressWarnings("unchecked")
 		List<Integer> puntajes = (List<Integer>) request.getSession().getAttribute("puntos");
-		if(puntajes == null) {
+		if (puntajes == null) {
 			puntajes = new ArrayList<>();
 			request.getSession().setAttribute("puntos", puntajes);
 		}
-		
+
 		puntajes.add(Integer.parseInt(respuesta));
 		request.getSession().setAttribute("puntos", puntajes);
-		
-		return "redirect:/pregunta4";
+
+		return "redirect:/p4";
 	}
 	
+	@GetMapping("/p4")
+	public String getPag4() {
+		return "pregunta4";
+	}
+
+	@PostMapping("/p4")
+	public String postPag4(@RequestParam String respuesta, HttpServletRequest request) { // TODO: process POST request
+
+		@SuppressWarnings("unchecked")
+		List<Integer> puntajes = (List<Integer>) request.getSession().getAttribute("puntos");
+		if (puntajes == null) {
+			puntajes = new ArrayList<>();
+			request.getSession().setAttribute("puntos", puntajes);
+		}
+
+		puntajes.add(Integer.parseInt(respuesta));
+		request.getSession().setAttribute("puntos", puntajes);
+
+		return "redirect:/p5";
+	}
+
+	@GetMapping("/p5")
+	public String getPagN() {
+		return "pregunta5";
+	}
+
+	@PostMapping("/p5")
+	public String postPagN(@RequestParam String respuesta, HttpServletRequest request) { // TODO: process POST request
+
+		@SuppressWarnings("unchecked")
+		List<Integer> puntajes = (List<Integer>) request.getSession().getAttribute("puntos");
+		if (puntajes == null) {
+			puntajes = new ArrayList<>();
+			request.getSession().setAttribute("puntos", puntajes);
+		}
+
+		puntajes.add(Integer.parseInt(respuesta));
+		request.getSession().setAttribute("puntos", puntajes);
+
+		return "redirect:/p6";
+	}
+
 	
+
 	/*
 	 * @GetMapping("/preguntaN") public String getPagN() { return "preguntaN"; }
 	 * 
 	 * @PostMapping("/preguntaN") public String postPagN(@RequestParam String
-	 * respuesta, HttpServletRequest request) { //TODO: process POST request
+	 * respuesta, HttpServletRequest request) { // TODO: process POST request
 	 * 
 	 * @SuppressWarnings("unchecked") List<Integer> puntajes = (List<Integer>)
-	 * request.getSession().getAttribute("puntos"); if(puntajes == null) { puntajes
+	 * request.getSession().getAttribute("puntos"); if (puntajes == null) { puntajes
 	 * = new ArrayList<>(); request.getSession().setAttribute("puntos", puntajes); }
 	 * 
 	 * puntajes.add(Integer.parseInt(respuesta));
 	 * request.getSession().setAttribute("puntos", puntajes);
 	 * 
 	 * return "redirect:/preguntaNN"; }
-	 */	
+	 */
 }
