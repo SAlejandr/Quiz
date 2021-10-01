@@ -11,18 +11,17 @@
 		<h1>Veamos si eres bueno en Total War Warhammer</h1>
 
 		<div class="row">
-			<img class="col-8" th:src="@{/img/total-war-ii.jpg}"/>
+			<img class="col-8" th:src="@{/img/TW-II-batalla.jpg}"/>
 		</div>
 
 		<div>
-			<form th:action="@{/p}" method="post">
-				<p> ¿En los ejercitos, siempre ganan? </p>
+			<form th:action="@{/p3}" method="post">
+				<p> Sacar demasiadas unidades de un tipo o clase se considera:  </p>
 				<p>
-					<input type="radio" name="respuesta" value="1">
-					<input type="radio" name="respuesta" value="2">
-					<input type="radio" name="respuesta" value="3">
-					<input type="radio" name="respuesta" value="4">
-				
+					<br/><input type="radio" name="respuesta" value="4"> Spam
+					<br/><input type="radio" name="respuesta" value="1">	Tactica inteligante
+					<br/><input type="radio" name="respuesta" value="2">	Perdida de dinero
+					<br/><input type="radio" name="respuesta" value="3">	Reto
 				</p>
 				<p>
 					<input type="submit">

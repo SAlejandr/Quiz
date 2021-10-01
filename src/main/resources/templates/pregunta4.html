@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/CSS/bootstrap.css}" />
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="container">
+
+		<h1>Veamos si eres bueno en Total War Warhammer</h1>
+
+		<div class="row">
+			<img class="col-8" th:src="@{/img/Total_War_Warhammer_Bretonnian.jpg}"/>
+		</div>
+
+		<div>
+			<form th:action="@{/p4}" method="post">
+				<p> La mejor manera de usar la caballeria cuerpo a cuerpo es </p>
+				<p>
+					<br/><input type="radio" name="respuesta" value="1">	Cargando primero y frente
+					<br/><input type="radio" name="respuesta" value="2">	En combate continuo
+					<br/><input type="radio" name="respuesta" value="3"> Atacando a los proyectiles
+					<br/><input type="radio" name="respuesta" value="4">	Por los flancos y con cargas continuas
+				
+				</p>
+				<p>
+					<input type="submit">
+				</p>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

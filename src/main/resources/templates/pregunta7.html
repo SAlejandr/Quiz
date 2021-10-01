@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/CSS/bootstrap.css}" />
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="container">
+
+		<h1>Veamos si eres bueno en Total War Warhammer</h1>
+
+		<div class="row">
+			<img class="col-8" th:src="@{/img/TW-II-batalla.jpg}"/>
+		</div>
+
+		<div>
+			<form th:action="@{/p7}" method="post">
+				<p> ¿Que es lo que nunca se puede olvidar antes de empezar una batalla? </p>
+				<p>
+					<br/><input type="radio" name="respuesta" value="1">	Hacer spam de infanteria
+					<br/><input type="radio" name="respuesta" value="4">	Tener un mago o una hechicera
+					<br/><input type="radio" name="respuesta" value="3">	Haber gastado todo el presupuesto
+					<br/><input type="radio" name="respuesta" value="2">	Mejorar todas las unidades posible a oro
+				</p>
+				<p>
+					<input type="submit">
+				</p>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

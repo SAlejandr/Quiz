@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/CSS/bootstrap.css}" />
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="container">
+
+		<h1>Veamos si eres bueno en Total War Warhammer</h1>
+
+		<div class="row">
+			<img class="col-8" th:src="@{/img/maxresdefault.jpg}"/>
+		</div>
+
+		<div>
+			<form th:action="@{/p6}" method="post">
+				<p> ¡Te estan atacando con artilleria! ¿Que tienes que hacer? </p>
+				<p>
+					<br/><input type="radio" name="respuesta" value="3">Intento moverme rapido para evitar que me de
+					<br/><input type="radio" name="respuesta" value="2">Me quedo quieto hasta que se acabe la municion
+					<br/><input type="radio" name="respuesta" value="4">Me disperso para reducir mas los daños
+					<br/><input type="radio" name="respuesta" value="1"> Junto mis tropas para ser un blanco mas pequeño
+				</p>
+				<p>
+					<input type="submit">
+				</p>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
