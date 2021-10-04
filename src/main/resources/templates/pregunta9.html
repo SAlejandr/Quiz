@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/CSS/bootstrap.css}" />
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="container">
+
+		<h1>Veamos si eres bueno en Total War Warhammer</h1>
+
+		<div class="row">
+			<img class="col-8" th:src="@{/img/hef_tyrion_01.jpg}" />
+		</div>
+
+		<div>
+			<form th:action="@{/p9}" method="post">
+				<p>¿Qué no le puede faltar a Tyrion como general?</p>
+				<p>
+					<select name="respuesta">
+						<option th:value="4">Objeto: El Corazon de Averlorn</option>
+						<option th:value="3">Montura: Corcel</option>
+						<option th:value="1">Unidad: Aguila Gigante</option>
+						<option th:value="2">Unidad: Mago de sombras</option>
+					</select> <br />
+					
+				</p>
+				<p>
+					<input type="submit">
+				</p>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

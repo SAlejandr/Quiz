@@ -19,9 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class QuizController {
-	
-	private final String[] GENERALES = {"Teclis", "Karl Franz", "Rapanse de Lyoness", "Tyrion", "Louen Leoncoeur", "Heinrich Kemmler", "Rakarth",
-			"Durthu", "Ungrim", "Thorgrim", "Taurox", "Khazrak", "Queek"} ;
+
+	private final String[] GENERALES = { "Teclis", "Karl Franz", "Rapanse de Lyoness", "Tyrion", "Louen Leoncoeur",
+			"Heinrich Kemmler", "Rakarth", "Durthu", "Ungrim", "Thorgrim", "Taurox", "Khazrak", "Queek" };
 
 	@GetMapping("/resultado")
 	public String getMethodName(Model modelo, HttpSession session) {
@@ -157,10 +157,9 @@ public class QuizController {
 		request.getSession().setAttribute("puntos", puntajes);
 
 		return "redirect:/p6";
-		
-		
+
 	}
-	
+
 	@GetMapping("/p6")
 	public String getPag6() {
 		return "pregunta6";
@@ -181,13 +180,13 @@ public class QuizController {
 
 		return "redirect:/p7";
 	}
-	
+
 	@GetMapping("/p7")
 	public String getPag7() {
 		return "pregunta7";
 	}
 
-	@PostMapping("p7")
+	@PostMapping("/p7")
 	public String postPag7(@RequestParam String respuesta, HttpServletRequest request) { // TODO: process POST request
 
 		@SuppressWarnings("unchecked")
@@ -200,15 +199,65 @@ public class QuizController {
 		puntajes.add(Integer.parseInt(respuesta));
 		request.getSession().setAttribute("puntos", puntajes);
 
-		return "redirect:/resultado";
-	}
-	
-	@GetMapping("/p7")
-	public String getPag9() {
-		return "pregunta7";
+		return "redirect:/p8";
 	}
 
-	@PostMapping("p7")
+	@GetMapping("/p8")
+	public String getPag8() {
+		return "pregunta8";
+	}
+
+	@PostMapping("/p8")
+	public String postPag8(@RequestParam String respuesta, HttpServletRequest request) { // TODO: process POST request
+
+		@SuppressWarnings("unchecked")
+		List<Integer> puntajes = (List<Integer>) request.getSession().getAttribute("puntos");
+		if (puntajes == null) {
+			puntajes = new ArrayList<>();
+			request.getSession().setAttribute("puntos", puntajes);
+		}
+
+		String[] gnrls = respuesta.split(", ");
+
+		Vector<String> generales = new Vector<>();
+
+		for (String general : gnrls) {
+			generales.add(general);
+		}
+
+		puntajes.add(darPuntosGnrl(generales));
+		request.getSession().setAttribute("puntos", puntajes);
+
+		return "redirect:/p9";
+	}
+
+	private Integer darPuntosGnrl(Vector<String> generales) {
+
+		int puntos = 1;
+		Vector<String> generalesCorrectos = new Vector<>();
+
+		for (String gnrl : GENERALES) {
+			generalesCorrectos.add(gnrl);
+		}
+
+		for (String gnrl : generales) {
+
+			if (generalesCorrectos.contains(gnrl) && puntos < 4) {
+				puntos++;
+				System.err.println(puntos);
+			}
+
+		}
+
+		return puntos;
+	}
+	
+	@GetMapping("/p9")
+	public String getPag9() {
+		return "pregunta9";
+	}
+
+	@PostMapping("/p9")
 	public String postPag9(@RequestParam String respuesta, HttpServletRequest request) { // TODO: process POST request
 
 		@SuppressWarnings("unchecked")
@@ -218,35 +267,31 @@ public class QuizController {
 			request.getSession().setAttribute("puntos", puntajes);
 		}
 
-		String[] gnrls = respuesta.split(",");
-		
-		//for(int i = 0; i < )
+		puntajes.add(Integer.parseInt(respuesta));
+		request.getSession().setAttribute("puntos", puntajes);
 
-		
-		//puntajes.add(darPuntosGnrl(gnrlDados));
+		return "redirect:/p10";
+	}
+
+	@GetMapping("/p10")
+	public String getPag10() {
+		return "pregunta10";
+	}
+
+	@PostMapping("/p10")
+	public String postPag10(@RequestParam String respuesta, HttpServletRequest request) { // TODO: process POST request
+
+		@SuppressWarnings("unchecked")
+		List<Integer> puntajes = (List<Integer>) request.getSession().getAttribute("puntos");
+		if (puntajes == null) {
+			puntajes = new ArrayList<>();
+			request.getSession().setAttribute("puntos", puntajes);
+		}
+
+		puntajes.add(Integer.parseInt(respuesta));
 		request.getSession().setAttribute("puntos", puntajes);
 
 		return "redirect:/resultado";
-	}
-	
-	private Integer darPuntosGnrl(Vector<String> generales) {
-		
-		int puntos = 1;
-		Vector<String> generalesCorrectos = new Vector<>();
-		
-		for (String gnrl : GENERALES) {
-			generalesCorrectos.add(gnrl);
-		}
-		
-		for (String gnrl : generales) {
-			
-			
-			
-			if(generalesCorrectos.contains(gnrl))
-				puntos++;
-		}
-		
-		return puntos;
 	}
 
 	/*
@@ -264,5 +309,4 @@ public class QuizController {
 	 * 
 	 * return "redirect:/preguntaNN"; }
 	 */
-
 }
