@@ -7,6 +7,17 @@ public class Usuario {
 	//variables
 	private String nombre;
 	private int puntaje;
+	
+	//Constructores
+	public Usuario() {
+		nombre = "";
+		puntaje = 0;
+	}
+	
+	public Usuario(String nombre, int puntaje) {
+		this.nombre = nombre;
+		this.puntaje = puntaje;
+	}
 	//getter & setter
 	public String getNombre() {
 		return nombre;

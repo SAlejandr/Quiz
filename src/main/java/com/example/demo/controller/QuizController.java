@@ -32,6 +32,11 @@ public class QuizController {
 			puntajes = new ArrayList<>();
 		}
 		// holasaaaaaaa
+		
+		
+		
+		
+		
 		int puntos = 0;
 
 		for (Integer punto : puntajes)
@@ -279,7 +284,9 @@ public class QuizController {
 	}
 
 	@PostMapping("/p10")
-	public String postPag10(@RequestParam String respuesta, HttpServletRequest request) { // TODO: process POST request
+	public String postPag10(@RequestParam(defaultValue = "false") Boolean respuesta1, @RequestParam(defaultValue = "false") Boolean respuesta2, 
+			@RequestParam(defaultValue = "false") Boolean respuesta3, @RequestParam(defaultValue = "false") Boolean respuesta4,
+			HttpServletRequest request) { // TODO: process POST request
 
 		@SuppressWarnings("unchecked")
 		List<Integer> puntajes = (List<Integer>) request.getSession().getAttribute("puntos");
@@ -288,7 +295,24 @@ public class QuizController {
 			request.getSession().setAttribute("puntos", puntajes);
 		}
 
-		puntajes.add(Integer.parseInt(respuesta));
+		int puntos = 0;
+		
+		if(respuesta1)
+			puntos += 2;
+		
+		if (respuesta3)
+			puntos +=2;
+		
+		if(respuesta2)
+			puntos -= 1;
+		
+		if(respuesta4)
+			puntos -= 1;
+		
+		if(puntos < 0)
+			puntos = 0;
+		
+		puntajes.add(puntos);
 		request.getSession().setAttribute("puntos", puntajes);
 
 		return "redirect:/resultado";
