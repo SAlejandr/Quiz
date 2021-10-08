@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.pojos.Usuario;
 
 @Repository
-public class UsuarioRepository implements DaoRepository {
+public class UsuarioRepository implements UsuarioDao {
 
 	@Autowired
 	private JdbcTemplate template;
@@ -45,7 +45,7 @@ public class UsuarioRepository implements DaoRepository {
 	@Override
 	public List<Usuario> findAll() {
 		// TODO Auto-generated method stub
-		return template.query("select * from usuario", (rs, rowNum) -> new Usuario(rs.getString("nombre"), rs.getInt("puntaje")));
+		return template.query("select * from usuario order by puntaje desc limit 15", (rs, rowNum) -> new Usuario(rs.getString("nombre"), rs.getInt("puntaje")));
 	}
 
 	/*

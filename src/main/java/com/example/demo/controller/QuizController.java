@@ -7,6 +7,7 @@ import java.util.Vector;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +18,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.pojos.Usuario;
+import com.example.demo.repositories.UsuarioDao;
+
 @Controller
 public class QuizController {
 
 	private final String[] GENERALES = { "Teclis", "Karl Franz", "Rapanse de Lyoness", "Tyrion", "Louen Leoncoeur",
 			"Heinrich Kemmler", "Rakarth", "Durthu", "Ungrim", "Thorgrim", "Taurox", "Khazrak", "Queek" };
+	
+	@Autowired
+	private UsuarioDao dao;
 
 	@GetMapping("/resultado")
 	public String getMethodName(Model modelo, HttpSession session) {
@@ -31,20 +38,61 @@ public class QuizController {
 		if (puntajes == null) {
 			puntajes = new ArrayList<>();
 		}
-		// holasaaaaaaa
-		
-		
-		
-		
 		
 		int puntos = 0;
 
 		for (Integer punto : puntajes)
 			puntos += punto;
 
-		modelo.addAttribute("puntaje", puntos);
+		String tipo = "", texto = "";
+		
+		if(puntos < 10)
+			tipo = "Skaven";
+		else if(puntos <18)
+			tipo = "No muerto";
+		else if (puntos < 26)
+			tipo = "Humanoide";
+		else if (puntos < 34)
+			tipo = "Elfico";
+		else
+			tipo = "Lord imperial";
+		
+		
+		
+		switch (tipo) {
+		case "Skaven":
+			texto = "Skavens : Crees en la supervivencia del más fuerte y que toda tactica es buena mientras te de la victoria,"
+					+ " no importa si es jugando sucio, siempre y cuando no te hagan lo mismo. Basicamente, un niño rata con esteroides.";
+			break;
+		case "No muerto":
+			texto = "Reyes Funerarios, Condes Vampiro y Costa del Vampiro: Empiezas a comprender que no todo vale para ganar, "
+					+ "pero te faltan muchas cosas que aprender, dependes del spam e intentas ganar con numeros o calidad, "
+					+ "por eso estas muerto en vida";
+			break;
 
-		return "resultados";
+		case "Humanoide":
+			texto = "Hombres Bestia, Hombres Lagartos y Pieles Verdes: Curtido en combate, hacer spam ya no se te hace necesario,"
+					+ "aunque lo disfrutas. Ahora elijes y menejas mejor tus tropas, cuidate mucho, puedes tener una recaida en las "
+					+ "manos de tus antiguos impulsos Skavens.";
+			break;
+
+		case "Elfico":
+			texto = "Elfos Oscuros, Elfos Silvanos y Altos Elfos: Has alcanzado un cierto nivel de maestria en el combate, cada victoria te sacia "
+					+ "y cada derrota te hace más fuerte. Resistes con firmeza los ataque, eliges bien tus tropas y atacas con impetud. Eres un rival "
+					+ "digno de temer";
+			break;
+
+		case "Lord imperial":
+			texto = "Bretonia e Imperio: Las batallas te han curtido a tal extremos que seleccionas tus tropas al milimetro y evitas las mañas, "
+					+ "el juego justo inunda tus venas y siempre juegas dando lo mejor de ti y evitas las batallas sin sentido";
+			break;
+		}
+		
+		modelo.addAttribute("puntaje", puntos);
+		modelo.addAttribute("tipo", tipo);
+		modelo.addAttribute("texto", texto);
+		
+		return "resultado";
 	}
 
 	@RequestMapping(value = "/inicio", method = RequestMethod.GET)
@@ -317,6 +365,25 @@ public class QuizController {
 
 		return "redirect:/resultado";
 	}
+	
+	@PostMapping("/tablaResultados")
+	public String GuardarYMostrar (@RequestParam String nombre,  HttpSession session) {
+
+		@SuppressWarnings("unchecked")
+		List<Integer> puntajes = (List<Integer>) session.getAttribute("puntos");
+		if (puntajes == null) {
+			puntajes = new ArrayList<>();
+		}
+		
+		int puntos = 0;
+
+		for (Integer punto : puntajes)
+			puntos += punto;
+		
+		Usuario u = new Usuario(nombre, puntos);
+		return "tablita";
+	}
+
 
 	/*
 	 * @GetMapping("/preguntaN") public String getPagN() { return "preguntaN"; }

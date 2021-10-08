@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import com.example.demo.pojos.Usuario;
 
-public interface DaoRepository {
+public interface UsuarioDao {
 
 	int count();
 	int save(Usuario usuario);

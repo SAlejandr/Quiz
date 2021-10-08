@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/CSS/bootstrap.css}" />
+<title>Aqui va el resultado</title>
+</head>
+<body>
+
+	<div class="container">
+
+		<h1 th:text="${tipo}"></h1>
+		
+		<img class="col-8" th:if="${tipo == 'Skaven'}"  th:src="@{/img/Skavens.png}">
+		<img class="col-8" th:if="${tipo == 'No muerto'}"  th:src="@{/img/vampire_counts.jpg}">
+		<img class="col-8" th:if="${tipo == 'Humanoide'}"  th:src="@{/img/hombres_lagarto.png}">
+		<img class="col-8" th:if="${tipo == 'Elfico'}"  th:src="@{/img/altos_elfos.jpg}">
+		<img class="col-8" th:if="${tipo == 'Lord imperial'}"  th:src="@{/img/Karl_Franz_Imperio.jpg}">
+
+		<p class="col-8" th:text="${texto}"></p>
+
+		<p>
+			Puntaje <span th:text="${puntaje}"></span>
+		</p>
+
+		<form th:action="@{/tablaResultados}" method="post">
+		
+			<legend>Si desea guardar su puntuacion anote su nombre</legend>
+			
+			<label>Nombre:</label>
+			
+			<input class="form-control" name="nombre" type="text" size="20"/><br/>
+			
+			<a th:href="@{/inicio}" class="btn btn-info"> Volver al menu </a>
+			
+			<input type="submit" class="btn btn-primary"/>
+		</form>
+	</div>
+
+</body>
+</html>
