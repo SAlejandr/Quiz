@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
@@ -26,7 +27,7 @@ public class QuizController {
 
 	private final String[] GENERALES = { "Teclis", "Karl Franz", "Rapanse de Lyoness", "Tyrion", "Louen Leoncoeur",
 			"Heinrich Kemmler", "Rakarth", "Durthu", "Ungrim", "Thorgrim", "Taurox", "Khazrak", "Queek" };
-	
+
 	@Autowired
 	private UsuarioDao dao;
 
@@ -38,17 +39,17 @@ public class QuizController {
 		if (puntajes == null) {
 			puntajes = new ArrayList<>();
 		}
-		
+
 		int puntos = 0;
 
 		for (Integer punto : puntajes)
 			puntos += punto;
 
 		String tipo = "", texto = "";
-		
-		if(puntos < 10)
+
+		if (puntos < 10)
 			tipo = "Skaven";
-		else if(puntos <18)
+		else if (puntos < 18)
 			tipo = "No muerto";
 		else if (puntos < 26)
 			tipo = "Humanoide";
@@ -56,9 +57,7 @@ public class QuizController {
 			tipo = "Elfico";
 		else
 			tipo = "Lord imperial";
-		
-		
-		
+
 		switch (tipo) {
 		case "Skaven":
 			texto = "Skavens : Crees en la supervivencia del más fuerte y que toda tactica es buena mientras te de la victoria,"
@@ -87,11 +86,11 @@ public class QuizController {
 					+ "el juego justo inunda tus venas y siempre juegas dando lo mejor de ti y evitas las batallas sin sentido";
 			break;
 		}
-		
+
 		modelo.addAttribute("puntaje", puntos);
 		modelo.addAttribute("tipo", tipo);
 		modelo.addAttribute("texto", texto);
-		
+
 		return "resultado";
 	}
 
@@ -304,7 +303,7 @@ public class QuizController {
 
 		return puntos;
 	}
-	
+
 	@GetMapping("/p9")
 	public String getPag9() {
 		return "pregunta9";
@@ -332,9 +331,11 @@ public class QuizController {
 	}
 
 	@PostMapping("/p10")
-	public String postPag10(@RequestParam(defaultValue = "false") Boolean respuesta1, @RequestParam(defaultValue = "false") Boolean respuesta2, 
-			@RequestParam(defaultValue = "false") Boolean respuesta3, @RequestParam(defaultValue = "false") Boolean respuesta4,
-			HttpServletRequest request) { // TODO: process POST request
+	public String postPag10(@RequestParam(defaultValue = "false") Boolean respuesta1,
+			@RequestParam(defaultValue = "false") Boolean respuesta2,
+			@RequestParam(defaultValue = "false") Boolean respuesta3,
+			@RequestParam(defaultValue = "false") Boolean respuesta4, HttpServletRequest request) { // TODO: process
+																									// POST request
 
 		@SuppressWarnings("unchecked")
 		List<Integer> puntajes = (List<Integer>) request.getSession().getAttribute("puntos");
@@ -344,46 +345,62 @@ public class QuizController {
 		}
 
 		int puntos = 0;
-		
-		if(respuesta1)
+
+		if (respuesta1)
 			puntos += 2;
-		
+
 		if (respuesta3)
-			puntos +=2;
-		
-		if(respuesta2)
+			puntos += 2;
+
+		if (respuesta2)
 			puntos -= 1;
-		
-		if(respuesta4)
+
+		if (respuesta4)
 			puntos -= 1;
-		
-		if(puntos < 0)
+
+		if (puntos < 0)
 			puntos = 0;
-		
+
 		puntajes.add(puntos);
 		request.getSession().setAttribute("puntos", puntajes);
 
 		return "redirect:/resultado";
 	}
-	
+
 	@PostMapping("/tablaResultados")
-	public String GuardarYMostrar (@RequestParam String nombre,  HttpSession session) {
+	public String GuardarYMostrar(@RequestParam String nombre, Model modelo, HttpSession session) {
 
 		@SuppressWarnings("unchecked")
 		List<Integer> puntajes = (List<Integer>) session.getAttribute("puntos");
 		if (puntajes == null) {
 			puntajes = new ArrayList<>();
 		}
-		
+
 		int puntos = 0;
 
 		for (Integer punto : puntajes)
 			puntos += punto;
-		
+
 		Usuario u = new Usuario(nombre, puntos);
-		return "tablita";
+
+		dao.save(u);
+
+		ArrayList<Usuario> clasificatoria = (ArrayList<Usuario>) dao.findAll();
+
+		modelo.addAttribute("usuarios", clasificatoria);
+
+		return "redirect:/tablaResultados";
 	}
 
+	@GetMapping(value = "/tablaResultados")
+	public String mostrarTabla(Model modelo) {
+
+		ArrayList<Usuario> clasificatoria = (ArrayList<Usuario>) dao.findAll();
+
+		modelo.addAttribute("usuarios", clasificatoria);
+
+		return "tablita";
+	}
 
 	/*
 	 * @GetMapping("/preguntaN") public String getPagN() { return "preguntaN"; }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/CSS/bootstrap.css}" />
+<title>Clasificados</title>
+</head>
+<body>
+	<div class="container">
+		<h1>Los resultados</h1>
+
+		<table class="col-4 table table-hover">
+			<thead>
+				<tr>
+					<th>Nombre</th>
+					<th>Puntos</th>
+				</tr>
+			</thead>
+
+			<tr th:each="clasificado : ${usuarios}" class="table-primary">
+				<td th:text="${clasificado.nombre}"></td>
+				<td th:text="${clasificado.puntaje}"></td>
+			</tr>
+		</table>
+		
+		<a th:href="@{/inicio}" class="btn btn-info"> Volver al menu </a>
+	</div>
+</body>
+</html>
