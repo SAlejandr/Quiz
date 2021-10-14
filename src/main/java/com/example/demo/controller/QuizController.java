@@ -402,19 +402,5 @@ public class QuizController {
 		return "tablita";
 	}
 
-	/*
-	 * @GetMapping("/preguntaN") public String getPagN() { return "preguntaN"; }
-	 * 
-	 * @PostMapping("/preguntaN") public String postPagN(@RequestParam String
-	 * respuesta, HttpServletRequest request) { // TODO: process POST request
-	 * 
-	 * @SuppressWarnings("unchecked") List<Integer> puntajes = (List<Integer>)
-	 * request.getSession().getAttribute("puntos"); if (puntajes == null) { puntajes
-	 * = new ArrayList<>(); request.getSession().setAttribute("puntos", puntajes); }
-	 * 
-	 * puntajes.add(Integer.parseInt(respuesta));
-	 * request.getSession().setAttribute("puntos", puntajes);
-	 * 
-	 * return "redirect:/preguntaNN"; }
-	 */
+	
 }
