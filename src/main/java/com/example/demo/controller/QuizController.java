@@ -83,7 +83,7 @@ public class QuizController {
 
 		case "Lord imperial":
 			texto = "Bretonia e Imperio: Las batallas te han curtido a tal extremos que seleccionas tus tropas al milimetro y evitas las mañas, "
-					+ "el juego justo inunda tus venas y siempre juegas dando lo mejor de ti y evitas las batallas sin sentido";
+					+ "el juego justo inunda tus venas y siempre juegas dando lo mejor de ti y evitas las batallas sin sentido como \"Lotus Moon\"";
 			break;
 		}
 
