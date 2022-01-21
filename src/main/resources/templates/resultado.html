@@ -25,15 +25,18 @@
 
 		<form th:action="@{/tablaResultados}" method="post">
 		
-			<legend>Si desea guardar su puntuacion anote su nombre</legend>
+			<fieldset>
+				<legend>Si desea guardar su puntuacion anote su nombre</legend>
 			
-			<label>Nombre:</label>
+				<label>Nombre:</label>
 			
-			<input class="form-control" name="nombre" type="text" size="20" required/><br/>
+				<input class="form-control" name="nombre" type="text" size="20" required/><br/>
 			
-			<a th:href="@{/inicio}" class="btn btn-info"> Volver al menu </a>
+				<a th:href="@{/inicio}" class="btn btn-info"> Volver al menu </a>
 			
-			<input type="submit" class="btn btn-primary"/>
+				<input type="submit" class="btn btn-primary"/>
+			</fieldset>
+			
 		</form>
 	</div>
 
